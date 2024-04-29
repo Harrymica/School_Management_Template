@@ -1,0 +1,198 @@
+﻿@page "/AddCourse"
+@layout MyLayout
+@inject ICourseServices serv 
+@inject IConfiguration config
+@inject IClassServices classServ
+
+<style>
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Cormorant Garamond', serif;
+        --font-serif: 'Cormorant Garamond';
+    }
+</style>
+<style>
+    body {
+        font-family: 'Cormorant Garamond', serif;
+        --font-serif: 'Cormorant Garamond';
+    }
+</style>
+
+<div class="flex min-h-screen flex-col bg-white dark:bg-gray-950">
+    <header class="flex h-16 items-center justify-between border-b bg-white px-6 dark:border-gray-800 dark:bg-gray-900">
+        <div class="flex items-center gap-4">
+            <a class="flex items-center gap-2 font-semibold" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="24"
+                     height="24"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     class="h-6 w-6">
+                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                </svg>
+                <span class="text-lg">Student Management</span>
+            </a>
+        </div>
+        <div class="flex items-center gap-4">
+            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"
+                    type="button"
+                    id="radix-:rd:"
+                    aria-haspopup="menu"
+                    aria-expanded="false"
+                    data-state="closed">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="24"
+                     height="24"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     class="h-5 w-5 dark:hidden">
+                    <circle cx="12" cy="12" r="4"></circle>
+                    <path d="M12 2v2"></path>
+                    <path d="M12 20v2"></path>
+                    <path d="m4.93 4.93 1.41 1.41"></path>
+                    <path d="m17.66 17.66 1.41 1.41"></path>
+                    <path d="M2 12h2"></path>
+                    <path d="M20 12h2"></path>
+                    <path d="m6.34 17.66-1.41 1.41"></path>
+                    <path d="m19.07 4.93-1.41 1.41"></path>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="24"
+                     height="24"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     class="h-5 w-5 hidden dark:block">
+                    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                </svg>
+                <span class="sr-only">Toggle theme</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="flex-1 px-4 py-8 md:px-6 md:py-12">
+        <EditForm Model="course" OnValidSubmit="Submit">
+
+            <div class="mx-auto max-w-2xl space-y-8">
+                <div class="space-y-2 text-center">
+                    <h1 class="text-3xl font-bold">Add New Course</h1>
+                    <p class="text-gray-500 dark:text-gray-400">Fill out the form to add a new student to the system.</p>
+                </div>
+                <div class="space-y-6">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                   for="firstName">
+                                Name
+                            </label>
+                            <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                   id="firstName"
+                                   @bind-value="course.Name"
+                                   placeholder="Enter name"
+                                   required="" />
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                   for="middleName">
+                                Code
+                            </label>
+                            <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                   id="middleName"
+                                   @bind-value="course.CourseCode"
+                                   placeholder="Enter Course Code" />
+                        </div>
+                    </div>
+                 
+                    <div class="grid grid-cols-2 gap-4">
+                       
+                      
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                   for="phone">
+                                Description
+                            </label>
+                            <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                   id="phone"
+                                   @bind-value="course.Description"
+                                   placeholder="Enter Description"
+                                   required=""
+                                   type="tel" />
+                        </div>
+                       
+                    </div>
+                    
+                    <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full"
+                            type="submit">
+                        Add Course
+                    </button>
+                </div>
+                    <div class="grid grid-cols-2 gap-4">
+
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                       for="phone">
+                                    Class 
+                                </label>
+                                <InputSelect class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                             id="text"
+                                             @bind-Value="course.ClassModelId"
+                                             required=""
+                                             type="text">
+                                    @if (_classModels != null)
+                                    {
+                                        foreach (var item in _classModels)
+                                        {
+                                            <option id="" value="@item.Id">@item.Name</option>
+
+                                        }
+
+                                    }
+                                </InputSelect>
+                            </div>
+
+                        </div>
+
+                        
+                    </div>
+            </div>
+
+        
+        
+            </div>
+
+         </EditForm>
+    </main>
+</div>
+
+@code {
+    private Courses course = new Courses();
+    private List<ClassModel> _classModels = new List<ClassModel>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _classModels = await classServ.GetAllClassesAsync();
+    }
+
+    public async Task Submit()
+    {
+      
+        await serv.AddCourseAsync(course);
+
+    }
+}
+
+    
+            

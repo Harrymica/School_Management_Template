@@ -1,0 +1,170 @@
+﻿@inherits LayoutComponentBase
+@inject ILocalStorageService lStorage
+@inject AuthenticationStateProvider Authprov
+@inject NavigationManager navMag
+@inject IJSRuntime Jsruntime
+
+<PageTitle>School_Management_Template</PageTitle>
+
+<style>
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Eczar', serif;
+        --font-serif: 'Eczar';
+    }
+</style>
+<style>
+    body {
+        font-family: 'Crimson Text', serif;
+        --font-serif: 'Crimson Text';
+    }
+</style>
+<div>
+    <div class="flex flex-col min-h-[100dvh]">
+        <header class="bg-gray-900 text-white py-4 px-6 flex items-center justify-between">
+            <a class="flex items-center" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="24"
+                     height="24"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     class="h-8 w-8 mr-2">
+                    <path d="m4 6 8-4 8 4"></path>
+                    <path d="m18 10 4 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-8l4-2"></path>
+                    <path d="M14 22v-4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v4"></path>
+                    <path d="M18 5v17"></path>
+                    <path d="M6 5v17"></path>
+                    <circle cx="12" cy="9" r="2"></circle>
+                </svg>
+                <span class="text-xl font-bold"> School Template</span>
+            </a>
+            <nav class="hidden md:flex items-center space-x-6">
+                
+                    <AuthorizeView>
+                        <NotAuthorized>
+                        <a class="hover:underline" style="cursor:pointer" href="#">
+                            About
+                        </a>
+                        <a class="hover:underline" style="cursor:pointer" href="#">
+                            Academics
+                        </a>
+                        <a class="hover:underline" style="cursor:pointer" href="#">
+                            Admissions
+                        </a>
+                        <a class="hover:underline" style="cursor:pointer" href="#">
+                            News
+                        </a>
+                        <a class="hover:underline" style="cursor:pointer" href="/login">
+                            Login
+                        </a>
+
+                        </NotAuthorized>
+                        <Authorized>
+                        <a class="hover:underline" style="cursor:pointer" href="#">
+                            About
+                        </a>
+                        <a class="hover:underline" style="cursor:pointer" href="#">
+                            Academics
+                        </a>
+                        <a class="hover:underline" style="cursor:pointer" href="#">
+                            Admissions
+                        </a>
+                        <a class="hover:underline" style="cursor:pointer" href="#">
+                            News
+                        </a>
+                        <a class="hover:underline" style="cursor:pointer">
+                            @email
+                        </a>
+                        <a class="hover:underline" style="cursor:pointer" @onclick="Logout">
+                            Logout
+                        </a>
+                        <a class="hover:underline" style="cursor:pointer" href="/profile">
+                            Profile
+                        </a>
+                    </Authorized>
+                    </AuthorizeView>
+                
+                <AuthorizeView Policy="Role">
+                   
+                    <Authorized>
+                        
+
+                        <a class="hover:underline" style="cursor:pointer">
+                            @email
+                        </a>
+                        <a class="hover:underline" style="cursor:pointer" href="/adminPage">
+                            Dashboard
+                        </a>
+                    </Authorized>
+                </AuthorizeView>
+
+            </nav>
+            <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 md:hidden">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="24"
+                     height="24"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     class="h-6 w-6">
+                    <line x1="4" x2="20" y1="12" y2="12"></line>
+                    <line x1="4" x2="20" y1="6" y2="6"></line>
+                    <line x1="4" x2="20" y1="18" y2="18"></line>
+                </svg>
+            </button>
+        </header>
+        </div>
+
+    <main>
+      
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+@code {
+    private string? email;
+    bool pageisRefreshed = false;
+
+   
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && pageisRefreshed == true)
+        {
+            email = await lStorage.GetItemAsStringAsync("email");
+
+            if (email != null)
+            {
+                email = email.Trim('"');
+                await ((CustomAuthenticationProvider)Authprov).UpdateAuthenticationStateAsync();
+                StateHasChanged();
+            }
+            pageisRefreshed = false;
+        }
+    }
+
+    private async Task Login()
+    {
+        pageisRefreshed = true;
+        navMag.NavigateTo("/login");
+    }
+
+    private async Task Logout()
+    {
+        await lStorage.RemoveItemAsync("email");
+        await ((CustomAuthenticationProvider)Authprov).UpdateAuthenticationStateAsync();
+        await Jsruntime.InvokeVoidAsync("refreshPage");
+        StateHasChanged();
+        pageisRefreshed = true;
+
+
+    }
+}

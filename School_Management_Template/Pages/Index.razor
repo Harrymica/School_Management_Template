@@ -1,0 +1,239 @@
+﻿@page "/index"
+@layout NoLayout
+<style>
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Cormorant Garamond', serif;
+        --font-serif: 'Cormorant Garamond';
+    }
+</style>
+<style>
+    body {
+        font-family: 'Cormorant Garamond', serif;
+        --font-serif: 'Cormorant Garamond';
+    }
+</style>
+<div class="flex flex-col min-h-[100dvh] bg-[#f5f5f5] text-[#333] dark:bg-[#1a1a1a] dark:text-[#f5f5f5]">
+    <header class="px-4 lg:px-6 h-14 flex items-center bg-[#f5f5f5] dark:bg-[#1a1a1a]">
+        <a class="flex items-center justify-center" href="#">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 width="24"
+                 height="24"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2"
+                 stroke-linecap="round"
+                 stroke-linejoin="round"
+                 class="h-6 w-6 text-[#8b5e3c]">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+            </svg>
+            <span class="sr-only">Acme School</span>
+        </a>
+        <nav class="ml-auto flex gap-4 sm:gap-6">
+            <a class="text-sm font-medium hover:underline underline-offset-4 text-[#8b5e3c]" href="#">
+                About
+            </a>
+            <a class="text-sm font-medium hover:underline underline-offset-4 text-[#8b5e3c]" href="#">
+                Academics
+            </a>
+            <a class="text-sm font-medium hover:underline underline-offset-4 text-[#8b5e3c]" href="#">
+                Admissions
+            </a>
+            <a class="text-sm font-medium hover:underline underline-offset-4 text-[#8b5e3c]" href="#">
+                Contact
+            </a>
+        </nav>
+    </header>
+    <main class="flex-1">
+        <section class="w-full py-12 md:py-24 lg:py-32 bg-[#f5f5f5] dark:bg-[#1a1a1a]">
+            <div class="container px-4 md:px-6">
+                <div class="grid max-w-5xl mx-auto gap-6 lg:grid-cols-2 lg:gap-10">
+                    <div class="space-y-4">
+                        <h1 class="text-4xl font-serif font-bold tracking-tighter text-[#8b5e3c] sm:text-5xl md:text-6xl">
+                            Acme School
+                        </h1>
+                        <p class="max-w-[600px] text-[#555] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-[#ccc]">
+                            Providing a nurturing environment and high-quality education since 1985. Empowering students to reach
+                            their full potential.
+                        </p>
+                        <div class="flex flex-col gap-2 min-[400px]:flex-row">
+                            <a class="inline-flex h-10 items-center justify-center rounded-md bg-[#8b5e3c] px-8 text-sm font-medium text-[#f5f5f5] shadow transition-colors hover:bg-[#7a5233] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#7a5233] disabled:pointer-events-none disabled:opacity-50 dark:bg-[#ccc] dark:text-[#1a1a1a] dark:hover:bg-[#b8b8b8] dark:focus-visible:ring-[#b8b8b8]"
+                               href="#">
+                                Explore Academics
+                            </a>
+                            <a class="inline-flex h-10 items-center justify-center rounded-md border border-[#8b5e3c] bg-[#f5f5f5] px-8 text-sm font-medium shadow-sm transition-colors hover:bg-[#e6e6e6] hover:text-[#8b5e3c] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#8b5e3c] disabled:pointer-events-none disabled:opacity-50 dark:border-[#ccc] dark:bg-[#1a1a1a] dark:hover:bg-[#333] dark:hover:text-[#ccc] dark:focus-visible:ring-[#ccc]"
+                               href="#">
+                                Schedule a Tour
+                            </a>
+                        </div>
+                    </div>
+                    <img src="/placeholder.svg"
+                         width="550"
+                         height="550"
+                         alt="Hero"
+                         class="mx-auto aspect-square overflow-hidden rounded-xl object-cover sm:w-full lg:order-last" />
+                </div>
+            </div>
+        </section>
+        <section class="w-full py-12 md:py-24 lg:py-32 bg-[#f5f5f5] dark:bg-[#1a1a1a]">
+            <div class="container px-4 md:px-6">
+                <div class="flex flex-col items-center justify-center space-y-4 text-center">
+                    <div class="space-y-2">
+                        <div class="inline-block rounded-lg bg-[#e6e6e6] px-3 py-1 text-sm dark:bg-[#333] text-[#8b5e3c]">
+                            Our Facilities
+                        </div>
+                        <h2 class="text-3xl font-serif font-bold tracking-tighter sm:text-5xl text-[#8b5e3c]">
+                            State-of-the-Art Campus
+                        </h2>
+                        <p class="max-w-[900px] text-[#555] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-[#ccc]">
+                            Acme School's campus features modern facilities, cutting-edge technology, and ample resources to
+                            support our students' academic and personal growth.
+                        </p>
+                    </div>
+                </div>
+                <div class="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12">
+                    <img src="/placeholder.svg"
+                         width="550"
+                         height="310"
+                         alt="Facilities"
+                         class="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last" />
+                    <div class="flex flex-col justify-center space-y-4">
+                        <ul class="grid gap-6">
+                            <li>
+                                <div class="grid gap-1">
+                                    <h3 class="text-xl font-serif font-bold text-[#8b5e3c]">Modern Classrooms</h3>
+                                    <p class="text-[#555] dark:text-[#ccc]">
+                                        Equipped with the latest technology and designed for optimal learning.
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="grid gap-1">
+                                    <h3 class="text-xl font-serif font-bold text-[#8b5e3c]">Cutting-Edge Labs</h3>
+                                    <p class="text-[#555] dark:text-[#ccc]">
+                                        Fully-equipped science and technology labs to support hands-on learning.
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="grid gap-1">
+                                    <h3 class="text-xl font-serif font-bold text-[#8b5e3c]">Spacious Library</h3>
+                                    <p class="text-[#555] dark:text-[#ccc]">
+                                        A vast collection of books and resources to fuel intellectual curiosity.
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="w-full py-12 md:py-24 lg:py-32 bg-[#f5f5f5] dark:bg-[#1a1a1a]">
+            <div class="container px-4 md:px-6">
+                <div class="flex flex-col items-center justify-center space-y-4 text-center">
+                    <div class="space-y-2">
+                        <div class="inline-block rounded-lg bg-[#e6e6e6] px-3 py-1 text-sm dark:bg-[#333] text-[#8b5e3c]">
+                            Our Curriculum
+                        </div>
+                        <h2 class="text-3xl font-serif font-bold tracking-tighter sm:text-5xl text-[#8b5e3c]">
+                            Comprehensive and Engaging
+                        </h2>
+                        <p class="max-w-[900px] text-[#555] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-[#ccc]">
+                            Acme School's curriculum is designed to challenge and inspire students, fostering critical thinking,
+                            creativity, and a lifelong love of learning.
+                        </p>
+                    </div>
+                </div>
+                <div class="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12">
+                    <div class="flex flex-col justify-center space-y-4">
+                        <ul class="grid gap-6">
+                            <li>
+                                <div class="grid gap-1">
+                                    <h3 class="text-xl font-serif font-bold text-[#8b5e3c]">Rigorous Academics</h3>
+                                    <p class="text-[#555] dark:text-[#ccc]">
+                                        A challenging curriculum that covers core subjects and advanced electives.
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="grid gap-1">
+                                    <h3 class="text-xl font-serif font-bold text-[#8b5e3c]">Hands-On Learning</h3>
+                                    <p class="text-[#555] dark:text-[#ccc]">
+                                        Opportunities for students to apply their knowledge through projects and experiments.
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="grid gap-1">
+                                    <h3 class="text-xl font-serif font-bold text-[#8b5e3c]">Extracurricular Activities</h3>
+                                    <p class="text-[#555] dark:text-[#ccc]">
+                                        A wide range of clubs, sports, and enrichment programs to support well-rounded development.
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <img src="/placeholder.svg"
+                         width="550"
+                         height="310"
+                         alt="Curriculum"
+                         class="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last" />
+                </div>
+            </div>
+        </section>
+        <section class="w-full py-12 md:py-24 lg:py-32 bg-[#f5f5f5] dark:bg-[#1a1a1a]">
+            <div class="container px-4 md:px-6">
+                <div class="flex flex-col items-center justify-center space-y-4 text-center">
+                    <div class="space-y-2">
+                        <div class="inline-block rounded-lg bg-[#e6e6e6] px-3 py-1 text-sm dark:bg-[#333] text-[#8b5e3c]">
+                            Our Faculty
+                        </div>
+                        <h2 class="text-3xl font-serif font-bold tracking-tighter sm:text-5xl text-[#8b5e3c]">
+                            Dedicated and Experienced
+                        </h2>
+                        <p class="max-w-[900px] text-[#555] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-[#ccc]">
+                            Acme School's faculty is composed of passionate educators who are committed to nurturing the growth
+                            and development
+                        </p>
+                    </div>
+                </div>
+                <div class="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12">
+                    <img src="/placeholder.svg"
+                         width="550"
+                         height="310"
+                         alt="Faculty"
+                         class="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last" />
+                    <div class="flex flex-col justify-center space-y-4">
+                        <ul class="grid gap-6">
+                            <li>
+                                <div class="grid gap-1">
+                                    <h3 class="text-xl font-serif font-bold text-[#8b5e3c]">Experienced Educators</h3>
+                                    <p class="text-[#555] dark:text-[#ccc]">
+                                        Our teachers have extensive backgrounds in their respective fields and a passion for teaching.
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="grid gap-1">
+                                    <h3 class="text-xl font-serif font-bold text-[#8b5e3c]">Personalized Attention</h3>
+                                    <p class="text-[#555] dark:text-[#ccc]">
+                                        Small class sizes allow our teachers to provide individualized support and guidance.
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="grid gap-1">
+                                    <h3 class="text-xl font-serif font-bold text-[#8b5e3c]">Ongoing Professional Development</h3>
+                                    <p class="text-[#555] dark:text-[#ccc]">
+                                        Our teachers continuously enhance their skills to deliver the best possible education.
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>

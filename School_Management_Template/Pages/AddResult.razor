@@ -1,0 +1,175 @@
+﻿@page "/addResult"
+@layout MyLayout
+@inject IResultServices Rserv
+@inject ICourseServices serv 
+@inject IStudentService studServ
+@inject IClassServices classServ
+@inject NavigationManager navMag
+
+<style>
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Cormorant Garamond', serif;
+        --font-serif: 'Cormorant Garamond';
+    }
+</style>
+<style>
+    body {
+        font-family: 'Cormorant Garamond', serif;
+        --font-serif: 'Cormorant Garamond';
+    }
+</style>
+
+<div class="flex min-h-screen flex-col bg-white dark:bg-gray-950">
+    
+
+    <main class="flex-1 px-4 py-8 md:px-6 md:py-12">
+        <EditForm Model="result" OnValidSubmit="Submit">
+
+            <div class="mx-auto max-w-2xl space-y-8">
+                <div class="space-y-2 text-center">
+                    <h1 class="text-3xl font-bold">Add New Course</h1>
+                    <p class="text-gray-500 dark:text-gray-400">Fill out the form to add a new student to the system.</p>
+                </div>
+                <div class="space-y-6">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                                   
+                                Course
+                            </label>
+                            <InputSelect class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                   id="firstName"
+                                   @bind-Value="result.CoursesId"
+                                   required="" >
+                                    <option value="">Select Courses</option>
+                                   @if (_courses != null)
+                                {
+                                    foreach (var item in _courses)
+                                    {
+                                        <option id="" value="@item.Id">@item.Name</option>
+
+                                    }
+
+                                }
+                                </InputSelect>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                   for="middleName">
+                                Students Name
+                            </label>
+
+
+                            <InputSelect class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                   
+                                   @bind-Value="result.StudentId">
+                                    
+                            <option value="">Select Student</option>
+                                    @if (_class != null)
+                                {
+                                    foreach (var student in _students)
+                                    {
+                                        <option value="@student.Id">@student.FirstName @student.MiddleName @student.LaststName @student.RegisterationNumber</option>
+                                       
+
+                                    }
+
+                                }
+                                 </InputSelect>
+                        </div>
+                        
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                   for="phone">
+                               Score
+                            </label>
+                            <InputNumber
+                                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                   
+                                   @bind-Value="result.Score"
+                                   
+                                   required=""
+                                   type="number" />
+                        </div>
+
+                    </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                       for="phone">
+                                    Score
+                                </label>
+                                <InputSelect class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                             @bind-Value="result.Grade"
+                                             required=""
+                                             type="number" >
+                                    <option value="">Select Grade</option>
+                                    @if (result != null)
+                                    {
+
+                                         <option value="@result.Grade">A</option>
+                                        <option value="@result.Grade">B+</option>
+                                        <option value="@result.Grade">B</option>
+                                        <option value="@result.Grade">C</option>
+                                        <option value="@result.Grade">D</option>
+                                        <option value="@result.Grade">E</option>
+                                        <option value="@result.Grade">F</option>
+
+
+                                        
+
+                                    }
+                                         </InputSelect>
+                            </div>
+
+                        </div>
+
+                    <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full"
+                            type="submit">
+                        Add Result
+                    </button>
+                </div>
+                    
+
+                        
+             </div>                  
+
+            </div>
+
+         </EditForm>
+    </main>
+</div>
+
+@code {
+    private Result result = new Result();
+    private List<Courses> _courses = new List<Courses>();
+    private List<Students> _students = new List<Students>();
+    private List<ClassModel> _class = new List<ClassModel>();
+    private Students student = new Students();
+    protected override async Task OnInitializedAsync()
+    {
+        _courses = await serv.GetAllCoursesAsync();
+        _students = await studServ.GetAllStudentsAsync();
+
+        _class = await classServ.GetAllClassesAsync();
+
+       
+    }
+
+    public async Task Submit()
+    {
+
+        await Rserv.AddResultAsync(result);
+        navMag.NavigateTo($"/studentPage");
+
+    }
+}
+
+
+

@@ -1,0 +1,91 @@
+﻿@page "/ResultPage/{id:int}"
+@layout MyLayout
+@inject IResultServices Rserv
+@inject ICourseServices Cserv
+@inject IStudentService Sserv
+@inject IClassServices ClassServ
+
+<div class="flex flex-col min-h-[100dvh]">
+    
+    <main class="flex-1 py-12 px-6">
+        <div class="max-w-3xl mx-auto space-y-8">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center justify-between">
+                    <div class="space-y-2">
+                        <h2 class="text-2xl font-serif font-bold">@student.FirstName @student.MiddleName @student.LaststName</h2>
+                        <p class="text-gray-500 font-medium"> @_class.Name</p>
+                    </div>
+                    <div class="bg-gray-900 text-white px-4 py-2 rounded-md font-medium"> <a href="/addResult"> Add Result</a></div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-md">
+                <table class="w-full border-collapse">
+                    <thead>
+                        <tr class="bg-gray-100 text-gray-600 font-medium">
+                            <th class="py-3 px-4 text-left">Subject</th>
+                            <th class="py-3 px-4 text-right">Grade</th>
+                            <th class="py-3 px-4 text-right">Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @if(results != null)
+                        {
+                                  
+                            @foreach(var item in results )
+                            {
+                            <tr class="border-b border-gray-200">
+                                    <td class="py-3 px-4 font-serif">
+                                        @if (item.Courses != null)
+                                        {
+                                            @item.Courses.Name
+                                        }
+                                    </td>
+                                    
+                               
+                             <td class="py-3 px-4 text-right font-medium">@item.Grade</td>
+                             <td class="py-3 px-4 text-right font-medium">@item.Score</td>
+                             
+                                        
+                                    
+                            </tr>
+                            }
+                        }
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+   
+</div>
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+    private List<Result> results = new List<Result>();
+    private Students student = new Students();
+    private List<Courses> courses = new List<Courses>();
+    private Courses course =  new Courses();
+    private ClassModel _class = new ClassModel();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        student = await Sserv.GetStudentByIdAsync(Id);
+        results = await Rserv.GetResultByIdAsync(Id);
+        _class = await ClassServ.GetClassesByIdAsync(student.ClassModelId);
+
+        foreach (var item in results)
+        {
+            item.Courses = await GetCourseAsync(item.CoursesId);
+        }
+
+    }
+
+    private async Task<Courses> GetCourseAsync(int courseId)
+    {
+        var courses = await Cserv.GetCourseByIdAsync(courseId);
+        return courses.FirstOrDefault();
+    }
+}

@@ -1,0 +1,100 @@
+﻿@page "/profile"
+@inject IStudentService studServ
+@inject ILocalStorageService lStorage
+@inject IDbContextFactory<DataContext> dbFactory
+@inject DataContext context
+@inject IConfiguration config
+
+
+
+
+<div class="w-full py-6 space-y-6">
+    <div class="container space-y-3 px-4 md:px-6">
+        <div class="flex items-center space-x-4">
+
+            @if (string.IsNullOrWhiteSpace(_student.Image) == false)
+            {
+                <img src="@CreateWebPath(_student.Image)"
+                     width="72"
+                     height="72"
+                     alt="Avatar"
+                     class="rounded-full"
+                     style="aspect-ratio: 72 / 72; object-fit: cover;" />
+             
+            }
+            
+            <div class="space-y-1">
+                <h1 class="text-2xl font-bold tracking-tighter sm:text-4xl">@_student.FirstName, @_student.LaststName</h1>
+                <div class="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
+                    <span class="font-semibold">@_student.Class</span>
+                    <span class="opacity-50">•</span>
+                    <span>@_student.Email</span>
+                </div>
+            </div>
+        </div>
+        <div class="grid gap-4">
+            <div class="grid gap-1">
+                <h2 class="text-xl font-semibold">Academic Information</h2>
+                <div class="grid gap-0.5 text-sm text-gray-500 dark:text-gray-400">
+                    <div class="grid grid-cols-2">
+                        <div>Full Name</div>
+                        <div>@_student.FirstName @_student.MiddleName @_student.LaststName</div>
+                    </div>
+                    <div class="grid grid-cols-2">
+                        <div>Email</div>
+                        <div>
+                            @_student.Email
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2">
+                        <div>Age</div>
+                        <div>@_student.Age.ToString("dd/MM//yyyy")</div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid gap-1">
+                <h2 class="text-xl font-semibold">Extracurricular Activities</h2>
+                <ul class="grid gap-2 list-disc list-outside pl-4 text-gray-500 dark:text-gray-400">
+                    <li>Basketball Team</li>
+                    <li>Chess Club</li>
+                    <li>Science Olympiad</li>
+                </ul>
+            </div>
+            <div class="grid gap-1">
+                <h2 class="text-xl font-semibold">Bio</h2>
+                <p class="text-gray-500 dark:text-gray-400">
+                    @_student.FirstName is a dedicated student with a passion for both sports and academics. She is known for her
+                    leadership skills and active participation in various school activities.
+
+
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+@code{
+    private Students _student = new Students();
+    private string? email;
+    private long maxSize = 1024 * 1024 * 10;
+    private int maxAllowedFiles = 1;
+
+    protected override async Task OnInitializedAsync()
+    {
+            email = await lStorage.GetItemAsStringAsync("email");
+
+        
+            email = email.Trim('"');
+            using var db = await dbFactory.CreateDbContextAsync();
+
+            var studentId = await db.Students.FirstOrDefaultAsync(s => s.Email == email);
+
+            
+            _student = await studServ.GetStudentByIdAsync(studentId.Id);
+          
+        
+    }
+    private string CreateWebPath(string relativePath)
+    {
+        return Path.Combine(config.GetValue<string>("WebStorageRoot")!, relativePath);
+    }
+}
